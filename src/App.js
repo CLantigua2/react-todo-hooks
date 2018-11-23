@@ -4,12 +4,27 @@ import Todo from './Todo';
 import TodoForm from './TodoForm';
 import './App.css';
 
-const App = (props) => {
+const App = (props, { index }) => {
 	const [ todos, setTodos ] = useState([
-		{ text: 'Learn about React' },
-		{ text: 'Meet friend for lunch' },
-		{ text: 'Build really cool todo app' }
+		{
+			text: 'Learn about React',
+			isComplete: false
+		},
+		{
+			text: 'Meet friend for lunch',
+			isComplete: false
+		},
+		{
+			text: 'Build really cool todo app',
+			isComplete: false
+		}
 	]);
+
+	const completeTodo = (index) => {
+		const newTodos = [ ...todos ];
+		newTodos[index].isComplete = !newTodos[index].isComplete;
+		setTodos(newTodos);
+	};
 
 	const [ value, setValue ] = useState('');
 
@@ -34,7 +49,15 @@ const App = (props) => {
 					handleSubmit={handleSubmit}
 					setValue={(e) => setValue(e.target.value)}
 				/>
-				{todos.map((todo, index) => <Todo key={index} index={index} todo={todo} />)}
+				{todos.map((todo, index) => (
+					<Todo
+						key={index}
+						index={index}
+						text={todo.text}
+						isComplete={todo.isComplete}
+						completeTodo={() => completeTodo(index)}
+					/>
+				))}
 			</div>
 		</div>
 	);
