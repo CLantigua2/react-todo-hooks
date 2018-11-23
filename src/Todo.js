@@ -6,6 +6,7 @@ const Todo = (props) => {
 			{props.text}
 			<div>
 				<button onClick={props.completeTodo}>Complete</button>
+				<button onClick={props.removeTodo}>X</button>
 			</div>
 		</div>
 	);

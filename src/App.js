@@ -4,7 +4,7 @@ import Todo from './Todo';
 import TodoForm from './TodoForm';
 import './App.css';
 
-const App = (props, { index }) => {
+const App = (props) => {
 	const [ todos, setTodos ] = useState([
 		{
 			text: 'Learn about React',
@@ -30,13 +30,20 @@ const App = (props, { index }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		const clearValues = '';
 		if (!value) return;
 		addTodo(value);
-		setValue('');
+		setValue(clearValues);
 	};
 
 	const addTodo = (text) => {
 		const newTodos = [ ...todos, { text } ];
+		setTodos(newTodos);
+	};
+
+	const removeTodo = (index) => {
+		const newTodos = [ ...todos ];
+		newTodos.splice(index, 1);
 		setTodos(newTodos);
 	};
 
@@ -49,15 +56,18 @@ const App = (props, { index }) => {
 					handleSubmit={handleSubmit}
 					setValue={(e) => setValue(e.target.value)}
 				/>
-				{todos.map((todo, index) => (
-					<Todo
-						key={index}
-						index={index}
-						text={todo.text}
-						isComplete={todo.isComplete}
-						completeTodo={() => completeTodo(index)}
-					/>
-				))}
+				<div className="card-content">
+					{todos.map((todo, index) => (
+						<Todo
+							key={index}
+							index={index}
+							text={todo.text}
+							isComplete={todo.isComplete}
+							completeTodo={() => completeTodo(index)}
+							removeTodo={() => removeTodo(index)}
+						/>
+					))}
+				</div>
 			</div>
 		</div>
 	);
