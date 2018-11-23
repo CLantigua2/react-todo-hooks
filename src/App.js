@@ -56,10 +56,13 @@ const App = (props) => {
 	// remove function for the todo
 	const removeTodo = (index) => {
 		const newTodos = [ ...todos ];
+		// checks to see if task is completed first
+		// if so, deletes
 		if (newTodos[index].isComplete) {
 			newTodos.splice(index, 1);
 			setTodos(newTodos);
 		} else {
+			// it asks you to complete it first
 			alert('Please complete the task first');
 		}
 	};
